@@ -9,7 +9,7 @@
 ;   ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД
 
 b       equ byte ptr
-w       equ word ptr 
+w       equ word ptr
 dwd     equ dword ptr
 
 
@@ -107,7 +107,7 @@ BlockRead     MACRO     Handle,Bytes          ; <=> … :
 
 ;ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД
 
-Close         MACRO      Handle 
+Close         MACRO      Handle
 	      mov        ah,3Eh
 	      mov        bx,handle
 	      int        21h
@@ -280,7 +280,7 @@ SETCOLOR      MACRO   Number, R,G,B
 
 ;ДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДДД
 ; passage en mode X
-InitX           MACRO                         
+InitX           MACRO
 		mov       dx,3c4h          ; Mode X 320x200 (TWEAKED)
 		mov       ax,0604h         ; Pas de Palette … zero
 		out       dx,ax            ; M‚moire vid‚o … zero aussi

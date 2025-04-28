@@ -28,7 +28,7 @@ gamma   equ w fs:[22]
 ;\ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ/
 
 MAIN3D                  proc    near
-; Rotation des points et des vecteurs...ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ                        
+; Rotation des points et des vecteurs...ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
                         CALL    PrepMatrice
 ; On ‚change DS et FS pour ‚viter des pr‚fixes:
                         push    fs
@@ -64,12 +64,12 @@ MAIN3D                  proc    near
                         dec     cx
                         jnz     bclRot2
                         ; rotation VctNrmPtsÄÄ>VctNrmPtsR
-                        
+
 ; Aplication des coordonn‚es de l'objet … ses points...ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
                         mov     eax,ds:[24]  ; EAX=x+y*65536
                         mov     dx,ds:[28]   ; DX=z
                         mov     cx,ds:[2]    ; CX=Nb_Pts
-                        mov     si,ds:[8]    ; SI=OFFSET PtsR   
+                        mov     si,ds:[8]    ; SI=OFFSET PtsR
              @deplace:  add     [si],eax
                         add     [si+4],dx
                         add     si,8
@@ -77,28 +77,28 @@ MAIN3D                  proc    near
                         jnz     @deplace
 
 ; projection des points … l'‚cran...ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
-                        
-                        CALL    XDZ 
-                        
+
+                        CALL    XDZ
+
                         push    fs
                         push    ds
                         pop     fs
                         pop     ds
-                        
+
 ; D‚tection des faces visibles...ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
                         ; un peu de code auto-modifi‚...
                         push    cs
                         push    cs
                         pop     ds
                         pop     es
-                        
+
                         mov     ax,fs:[4]
                         mov     w cs:@face2+5,ax
                         add     ax,2
                         mov     w cs:@face1+5,ax
                         add     ax,2
                         mov     w cs:@face3+5,ax
-                        
+
                         mov     ax,fs:[14]
                         mov     w cs:@scr1+5,ax
                         mov     w cs:@scr3+5,ax
@@ -114,11 +114,11 @@ MAIN3D                  proc    near
                         mov     w cs:@ptsR2+5,ax
                         mov     w cs:@ptsR3+5,ax
                         ; et enfin THE code:
-                        
+
                         xor     ebp,ebp
                         mov     esi,ebp
             mainboucle: push    bp
-                        
+
              @face1:    mov     si,fs:[8*ebp+2+01234h]   ; Faces
               @scr1:    mov     ax,fs:[4*esi+01234h]
               @scr2:    mov     bx,fs:[4*esi+01234h+2]   ; Ecran
@@ -132,15 +132,15 @@ MAIN3D                  proc    near
               @scr3:    add     ax,fs:[4*esi+01234h]
               @scr4:    add     bx,fs:[4*esi+01234h+2]
               @ptsR2:   add     dx,fs:[8*esi+4+01234h]
-                        
+
              @face3:    mov     si,fs:[8*ebp+4+01234h]
               @scr5:    add     cx,fs:[4*esi+01234h]
               @scr6:    add     di,fs:[4*esi+2+01234h]
               @ptsR3:   add     dx,fs:[8*esi+4+01234h]
-                        
+
                         imul    ax,di
                         imul    bx,cx
-                        
+
                         cmp     ax,bx
                         jle     invisible
                         pop     ax
@@ -152,7 +152,7 @@ MAIN3D                  proc    near
                  patch1:mov     ds:[1111],fs
                         add     w cs:patch +3,4
                         add     w cs:patch1+2,4
-                        
+
           invisible:    pop     bp
                         inc     bp
                         cmp     bp,fs:[0]
@@ -182,39 +182,39 @@ AFFICHAGE               proc    near
                         cmp     ax,FacesVisiblesObj[si]
                         je      @face21
                         mov     fs,FacesVisiblesObj[si]
-                        CALL    RINIT         
+                        CALL    RINIT
              @face21:   movzx   edi,w fs:[8*ebx+01234h]    ; Face
              @ecran1:   mov     eax,dwd fs:[4*edi+01234h]  ; Ecran
                         ror     eax,16
                         mov     dwd fy1,eax
         @VctNrmPtsR1:   mov     eax,dwd fs:[8*edi+01234h]
                         mov     dwd VctX1,eax
-                        
+
              @face22:   mov     di,fs:[8*ebx+2+01234h]
              @ecran2:   mov     eax,dwd fs:[4*edi+01234h]
                         ror     eax,16
                         mov     dwd fy2,eax
         @VctNrmPtsR2:   mov     eax,dwd fs:[8*edi+01234h]
                         mov     dwd VctX2,eax
-                        
+
              @face23:   mov     di,fs:[8*ebx+01234h+4]   ; bp=Nø du troisiŠme point
              @ecran3:   mov     eax,dwd fs:[4*edi+01234h]
                         ror     eax,16
                         mov     dwd fy3,eax
         @VctNrmPtsR3:   mov     eax,dwd fs:[8*edi+01234h]
                         mov     dwd VctX3,eax
-                        
+
         Gofilling:      push    si
                         call    FILL_POLY
                         pop     si
-                        
+
         @NextOne:       add     si,4
                         cmp     dwd FacesVisibles[si],0
                         jnz     BclAff
                         cmp     dwd FacesVisibles[si+4],0
                         jnz     BclAff
                         ret
-; Finissement de l'affichage des faces visibles.               
+; Finissement de l'affichage des faces visibles.
                rinit:
                         mov     ax,fs:[14]
                         mov     w cs:@ecran1+6,ax
@@ -225,7 +225,7 @@ AFFICHAGE               proc    near
                         mov     w cs:@VctNrmPtsR1+6,ax
                         mov     w cs:@VctNrmPtsR2+6,ax
                         mov     w cs:@VctNrmPtsR3+6,ax
-                        
+
                         mov     ax,fs:[4]
                         mov     w cs:@face21+7,ax
                         inc     ax
@@ -266,7 +266,7 @@ PrepMatrice             proc    near
                         movsx   eax,w cos_table[bx]
                         mov     siny,eax
                         ; sin(á)
-                        
+
                         mov     bx,fs:[22]
                         shl     bx,1
                         and     bx,2048-1
@@ -278,7 +278,7 @@ PrepMatrice             proc    near
                         and     bx,2048-1
                         movsx   eax,w cos_table[bx]
                         mov     sinz,eax
-                        ; sin(â)                        
+                        ; sin(â)
 
 ; Fin de la pr‚paration des sinus et cosinus.
 
@@ -404,7 +404,7 @@ gauche_pluspres:
         a_droite:
                 cmp     si,di
                 jg      finbou
-                
+
                 mov     eax,dwd FacesVisibles[si]
                 xchg    eax,dwd FacesVisibles[di]
                 mov     dwd FacesVisibles[si],eax
@@ -418,7 +418,7 @@ gauche_pluspres:
                 cmp     si,di
                 jle     gauche_pluspres
                 mov     cx,si
-                
+
                 cmp     bas,di
                 jge     droite_fini
                 call    quicksort pascal,bas,di
@@ -494,7 +494,7 @@ FILL_POLY               proc    near
                         jg      @end_poly
                         or      ch,ch
                         js      @end_poly
-                        
+
                         mov     edx,319*65536
                         cmp     eax,edx
                         jle     @ok
@@ -503,23 +503,23 @@ FILL_POLY               proc    near
                         cmp     ecx,edx
                         jle     @ok
                         jmp     @end_poly
-                   @ok: 
+                   @ok:
                         mov     dwd fY1,eax
                         mov     dwd fY2,ebx
                         mov     dwd fY3,ecx
-                        
+
                         mov     dwd VctX1,esi
                         mov     dwd VctX2,edi
                         mov     dwd VctX3,ebp
-                        
+
                         mov     Ycourant,ax
                         sub     cx,ax
                         mov     count,cx
-                        
+
                         mov     dx,320
                         mul     dx
                         mov     off_ligne,ax
-                        
+
                         xor     ax,ax
                         mov     Xg,eax
                         mov     Xp,eax
@@ -543,7 +543,7 @@ FILL_POLY               proc    near
                         idiv    ecx
                         mov     dwd cs:inc_Xg +5,eax
 
-; puis sur le petit cot‚ 1:                  
+; puis sur le petit cot‚ 1:
                         mov     bx,fy2
                         sub     bx,fy1
                         jnz     @ok2
@@ -582,7 +582,7 @@ FILL_POLY               proc    near
                         idiv    ebx
                         mov     esi,eax
                         mov     dwd cs:inc_Xm+5,eax
-                        
+
                         mov     ax,VctY3
                         sub     ax,VctY1
                         shl     eax,16
@@ -590,7 +590,7 @@ FILL_POLY               proc    near
                         idiv    ebx
                         mov     edi,eax
                         mov     dwd cs:inc_Ym+5,eax
-                        
+
                         mov     bp,fy2
                         sub     bp,fy1
                         movsx   ebp,bp
@@ -610,7 +610,7 @@ FILL_POLY               proc    near
                         inc     cx
                  @ok5:  movsx   ecx,cx
                         ; ECX=d(X)
-                        
+
                         mov     largeur,cx
                         add     largeur,2
 
@@ -624,7 +624,7 @@ FILL_POLY               proc    near
                         idiv    ecx
                         mov     ebx,eax
                         ; IncX fini
-                        
+
                         imul    edi,ebp
                         shr     edi,16
                         add     di,VctY1
@@ -638,13 +638,13 @@ FILL_POLY               proc    near
                         mov     bx,ax
                         mov     increment,ebx
                         ; IncY fini
-                        
+
                         Call    GenCode
                         mov     es,Virtuel
                         xor     edx,edx
                         mov     ebp,edx
-                        
-; Remplissage du polygone:        
+
+; Remplissage du polygone:
                         mov     ax,fy1
                         cmp     ax,fy2
                         jne     @next_line
@@ -659,12 +659,12 @@ FILL_POLY               proc    near
                         cmp     ax,fy2
                         jne     @fsuite
                   incA: mov     dwd cs:inc_Xp+5,012345678h
-                
+
                 @fsuite:or      ax,ax
                         jl      inc_Xg
                         cmp     ax,199
                         jg      @end_poly
-                        
+
                         cmp     sens,0
                         je      @r
                         Call    Gauche
@@ -673,12 +673,12 @@ FILL_POLY               proc    near
               @over:    mov     b cs:fill[8*ebp],0C3h   ; (0C3h=ret)
                         mov     dx,ds
                         mov     ds,SegPhong
-                        
+
                         CALL    FILL
-                        
+
                         mov     ds,dx
                         mov     b cs:fill[8*ebp],08Ah
-              
+
                 inc_Xg: add     Xg,012345678h      ; X grand cot‚
                 inc_Xp: add     Xp,012345678h      ; X petit cot‚
                 inc_Xm: add     Xm,012345678h      ; VctX grand cot‚
@@ -703,7 +703,7 @@ gauche:                 mov     di,w Xg+2
                         mov     bh,b Ym+2
                         mov     bl,b Xm+2
                         std
-                        ret                 
+                        ret
 
 droite:                 mov     bp,w Xp+2
                         mov     di,w Xg+2
@@ -730,7 +730,7 @@ gencode:                xor     ecx,ecx
                         cmp     sens,1
                         jne     @sa
                         mov     dl,04Fh         ; dec di
-                   @sa: mov     ebp,increment                        
+                   @sa: mov     ebp,increment
                         mov     di,OFFSET fill+2
                         mov     bx,largeur
 
@@ -749,7 +749,7 @@ FILL_POLY               endp
 ;ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
 ; Pr‚calcule les vecteurs normaux en chaque points et les norme.
 
-CALC_NORM               proc    near                        
+CALC_NORM               proc    near
                         push    fs
                         pop     es
                         mov     cx,fs:[2]   ; Nb_Pts
@@ -764,7 +764,7 @@ CALC_NORM               proc    near
                         xor     bx,bx
         main1boucle:    push    bx
                         shl     bx,3
-                        
+
                         movzx   ebp,w fs:[6]      ; Pts
                         movzx   esi,w fs:[di+bx]   ; Faces
                         movsx   ecx,w fs:[ebp+8*esi]    ; Pts
@@ -779,7 +779,7 @@ CALC_NORM               proc    near
                         neg     ecx
                         mov     Z1,ecx
                         mov     Z2,ecx
-                        
+
                         mov     si,fs:[di+bx+2]  ; Faces
                         movsx   ecx,w fs:[ebp+8*esi]
                         add     X1,ecx
@@ -787,7 +787,7 @@ CALC_NORM               proc    near
                         add     Y1,ecx
                         movsx   ecx,w fs:[ebp+8*esi+4]
                         add     Z1,ecx          ; Premier vecteur fini.
-                        
+
                         mov     si,fs:[di+bx+4]   ; Faces
                         movsx   ecx,w fs:[ebp+8*esi]
                         add     X2,ecx
@@ -795,7 +795,7 @@ CALC_NORM               proc    near
                         add     Y2,ecx
                         movsx   ecx,w fs:[ebp+8*esi+4]
                         add     Z2,ecx          ; Second vecteur fini.
-                        
+
                         ; Les vecteurs de surface sont finis.
 
                         mov     eax,Y1
@@ -832,10 +832,10 @@ CALC_NORM               proc    near
                         add     fs:[ebp+8*esi],ax     ; VctNrmPts
                         add     fs:[ebp+8*esi+2],dx
                         add     fs:[ebp+8*esi+4],cx
-                        add     bx,2                        
+                        add     bx,2
                         dec     popo
                         jnz     @MakeVct
-                        
+
                         pop     bx
                         inc     bx
                         cmp     bx,fs:[0]    ; Nb_Faces
@@ -862,7 +862,7 @@ CALC_NORM               proc    near
                         or      ebp,ebp
                         jnz     po10
                         inc     ebp
-                 po10:  
+                 po10:
                         movsx   eax,w fs:[bx+si]     ; VctNrmPts
                         movsx   edi,w fs:[bx+si+2]
                         movsx   ecx,w fs:[bx+si+4]
@@ -934,7 +934,7 @@ Gen_Phong               endp
 ; Calcul de la racine carr‚e.
 ; entr‚e:EBP=carr‚
 ; sortie:EAX=racine
-RACINE                  proc    near                        
+RACINE                  proc    near
                         mov     cx,7
                         mov     ebx,0FFh
                         EVEN
@@ -944,7 +944,7 @@ RACINE                  proc    near
                         add     eax,ebx
                         shr     eax,1
                         mov     ebx,eax
-                        dec     cx    
+                        dec     cx
                         jnz     @racbcl
                         ret
 RACINE                  endp

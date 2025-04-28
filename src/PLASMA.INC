@@ -8,7 +8,7 @@ RandomSeed              dw  56        ; Chiffre al괶toire 0<X<255 (56)
 W_Divider               dw  0DB97h
 ;컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
 
-GEN_PLASMA      proc    near                
+GEN_PLASMA      proc    near
                 xor     di, di
                 mov     es,SegPlasma
                 stc
@@ -33,13 +33,13 @@ GEN_PLASMA      proc    near
                 or      di,di
                 jne     @shr
                 push    cs
-                pop     es                
+                pop     es
                 ret
 GEN_PLASMA      endp
 ;컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
 ; Routine pour l'affichage des nuages de MARS.
 
-CalcFrac        PROC    NEAR       
+CalcFrac        PROC    NEAR
                 shr     cx, 1
                 jz      End_Frac
                 xor     ax, ax

@@ -12,26 +12,26 @@ MakeObj         proc    near
                 cdq
                 idiv    dwd Nb_etape
                 mov     Incr,eax         ; Increment de rotation
-                
+
                 ; mise des parametres dans le seg de donn‚es.
                 movzx   eax,Nb_Pts
                 cdq
                 imul    w Nb_etape
                 mov     totpts,ax       ; Nb de pts
-                lea     dx,[eax*2]     
+                lea     dx,[eax*2]
                 mov     totface,dx      ; Nb de face
                 imul    ax,36
                 lea     dx,[edx*8+eax+10]
                 shr     dx,4
                 add     dx,10
-                
+
                 NEWP    SegLofter,dx
-                
+
                 mov     fs,SegLofter
                 mov     ax,totpts
                 mov     w fs:[2],ax      ; Nb_Pts
                 mov     ax,totface
-                mov     w fs:[0],ax      ; Nb_Faces                
+                mov     w fs:[0],ax      ; Nb_Faces
 
                 mov     di,30
                 mov     fs:[6],di        ; OFFSET Pts
@@ -40,7 +40,7 @@ MakeObj         proc    near
                 mov     angle,0
                 mov     cx,w Nb_Etape
     @MakePts:   push    cx
-                
+
                 movzx   ebx,w angle+2
                 and     bx,1024-1
                 movsx   eax,w cos_table[2*ebx]
@@ -79,16 +79,16 @@ MakeObj         proc    near
 
 ; Cr‚ation des faces de l'objet.
                 mov     fs:[4],di               ; OFFSET Face
-                
+
                 mov     bp,w Nb_Etape
                 dec     bp
                 imul    bp,Nb_Pts
                 add     bp,Nb_Pts
-                
+
                 xor     eax,eax
                 mov     ebx,eax
                 mov     esi,eax
-                
+
                 mov     cx,Nb_Etape
      @mface3:   push    cx
                 xor     edx,edx
@@ -110,11 +110,11 @@ MakeObj         proc    near
                 mov     fs:[di+4],ax
                 mov     w fs:[di+6],0
                 add     di,8
-                
+
                 mov     fs:[di],bx
                 mov     fs:[di+2],ax
                 lea     ax,[ebx+1]
-                inc     dx     
+                inc     dx
                 cmp     dx,Nb_Pts
                 jne     @ok_make_faces2
                 sub     ax,Nb_Pts
@@ -122,13 +122,13 @@ MakeObj         proc    near
                 mov     fs:[di+4],ax
                 mov     w fs:[di+6],0
                 add     di,8
-                
+
                 inc     dx
                 inc     bx
                 pop     cx
                 dec     cx
                 jnz     @mface4
-                
+
                 add     si,Nb_Pts
                 pop     cx
                 dec     cx

@@ -23,7 +23,7 @@ GO_T1                   proc    near
         fin_tunnel:     ret
 GO_T1                   endp
 ;컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
-GO_T2                   proc    near                        
+GO_T2                   proc    near
                         xor     eax,eax
                         mov     Time,eax
                         mov     decal,ax
@@ -72,14 +72,14 @@ TUN1                    proc    near
                         ALIGN   4
                 @aff:   mov     ebx,fs:[bp]
                         add     ebx,edx
-                        
+
                         movzx   si,bh
               patching: add     si,01234h
                         and     si,256-1
                         mov     si,w cs:Cos_Table[8*esi]
                         sar     si,4
                         mov     al,[bx+si]
-                        
+
                         shr     ebx,16
                         movzx   si,bh
               patching1:add     si,01234h
@@ -87,7 +87,7 @@ TUN1                    proc    near
                         mov     si,w cs:Cos_Table[8*esi]
                         sar     si,4
                         mov     ah,[bx+si]
-                        
+
                         mov     es:[di],ax
                         add     di,2
                         add     bp,4
@@ -138,15 +138,15 @@ TUN2                    proc    near
                         ret
 TUN2                    endp
 ;컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴�
-; Pr굋are les adresses dans les segments SegAdresse1 et SegAdresse2, 
-; en enroulant chaque ligne de la mappe 256*256 sur un cercle dont le rayon 
+; Pr굋are les adresses dans les segments SegAdresse1 et SegAdresse2,
+; en enroulant chaque ligne de la mappe 256*256 sur un cercle dont le rayon
 ; croit.
 
 GEN_ADRESSE             proc    near
                         mov     fs,SegAdresse1
                         mov     gs,SegAdresse2
                         mov     Popo,2
-                
+
                 @a2:    xor     bx,bx
                         mov     bp,bx
                         mov     ax,2500
@@ -172,7 +172,7 @@ GEN_ADRESSE             proc    near
                         mov     edi,eax
                         cmp     ax,319
                         ja      @next
-                        
+
                         lea     si,[bx-512]
                         and     si,2048-1
                         mov     ax,w Cos_Table[si]
@@ -182,19 +182,19 @@ GEN_ADRESSE             proc    near
                         add     eax,100
                         cmp     ax,199
                         ja      @next
-                        
+
                         lea     eax,[eax+eax*4]
                         shl     eax,6
                         add     edi,eax
                         add     edi,edi
                         mov     ax,w adresse+2
-                        
+
                         cmp     edi,64000
                         jb      @fs
                         add     edi,65536-64000
                         mov     gs:[di],ax
                         jmp     @next
-                  
+
                   @fs:  mov     fs:[di],ax
                @next:   add     adresse,04000h
                         add     bp,8
