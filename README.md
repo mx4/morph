@@ -9,6 +9,6 @@ Notes:
 
 https://www.demoparty.net/the-party/the-party-5
 
-![torus](./assets/torus.png)
-![rotowarp](./assets/rotowarp.png)
-![rotozoom](./assets/rotozoom.png)
+[![torus](./assets/torus.png)](https://www.youtube.com/watch?v=KzY_subsYoM)
+[![rotowarp](./assets/rotowarp.png)](https://www.youtube.com/watch?v=KzY_subsYoM)
+[![rotozoom](./assets/rotozoom.png)](https://www.youtube.com/watch?v=KzY_subsYoM)
