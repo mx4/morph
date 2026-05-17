@@ -1,9 +1,13 @@
-# MORPH — DOS 4K intro (UASM: brew tap upiter/uasm && brew install uasm)
+# MORPH — DOS 4K intro
+#   uasm: brew tap upiter/uasm && brew install uasm
+#   upx:  brew install upx
 
 ASM       := MORPH.ASM
 COM       := morph.com
 UASM      ?= uasm
+UPX       ?= upx
 UASMFLAGS := -Cu -bin -Fo $(COM)
+UPXFLAGS  := --best
 DEPS      := MACROS.INC MOTEUR.ASM MAKE_1.ASM PLASMA.INC TUNNEL.INC
 STEM      := $(basename $(ASM))
 CLEAN     := $(COM) $(STEM).err $(STEM).lst
@@ -19,7 +23,8 @@ build: $(COM)
 
 $(COM): $(ASM) $(DEPS)
 	$(UASM) $(UASMFLAGS) $(ASM)
-	@echo "Built: $(CURDIR)/$(COM) ($$(wc -c < $(COM) | tr -d ' ') bytes)"
+	$(UPX) $(UPXFLAGS) $(COM)
+	@echo "Built: $(CURDIR)/$(COM) ($$(wc -c < $(COM) | tr -d ' ') bytes, UPX)"
 
 run: $(COM)
 	@if command -v dosbox >/dev/null 2>&1; then \
