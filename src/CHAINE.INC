@@ -1,5 +1,5 @@
 ;
-; Gestion de l'affichage de nombre d‚cimaux et hexad‚cimaux.
+; Gestion de l'affichage de nombre dÃ©cimaux et hexadÃ©cimaux.
 ;
 ; affiche le nombre contenu dans EAX:
 Aff_decimal     proc
@@ -30,7 +30,7 @@ affichage_nombre:
 		ret
 Aff_decimal     endp
 ;
-; Affiche un nombre hexad‚cimal contenu dans EAX:
+; Affiche un nombre hexadÃ©cimal contenu dans EAX:
 aff_hexa        proc
 		push    eax
 		mov     dh,1    ; ligne

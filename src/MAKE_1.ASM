@@ -1,6 +1,6 @@
-;ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
-;                     Cr‚ation d'objet par r‚volution.
-;ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+;â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+;                     CrÃ©ation d'objet par rÃ©volution.
+;â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ; This is a very useful routine to make 3D objects in a very little 4Kb.
 
 Nb_Pts   equ w gs:[0]
@@ -13,7 +13,7 @@ MakeObj         proc    near
                 idiv    dwd Nb_etape
                 mov     Incr,eax         ; Increment de rotation
 
-                ; mise des parametres dans le seg de donn‚es.
+                ; mise des parametres dans le seg de donnÃ©es.
                 movzx   eax,Nb_Pts
                 cdq
                 imul    w Nb_etape
@@ -36,7 +36,7 @@ MakeObj         proc    near
                 mov     di,30
                 mov     fs:[6],di        ; OFFSET Pts
 
-; Cr‚ation de tous les points de mon objet par rotation autour de Oy.
+; CrÃ©ation de tous les points de mon objet par rotation autour de Oy.
                 mov     angle,0
                 mov     cx,w Nb_Etape
     @MakePts:   push    cx
@@ -45,12 +45,12 @@ MakeObj         proc    near
                 and     bx,1024-1
                 movsx   eax,w cos_table[2*ebx]
                 mov     cos,eax
-                ; cos(à)
+                ; cos(Î±)
                 dec     bh
                 and     bx,1024-1
                 movsx   eax,w cos_table[2*ebx]
                 mov     sin,eax
-                ; sin(à)
+                ; sin(Î±)
 
                 mov     si,2+4
                 mov     cx,Nb_Pts
@@ -77,7 +77,7 @@ MakeObj         proc    near
                 dec     cx
                 jnz     @makePts
 
-; Cr‚ation des faces de l'objet.
+; CrÃ©ation des faces de l'objet.
                 mov     fs:[4],di               ; OFFSET Face
 
                 mov     bp,w Nb_Etape
@@ -155,6 +155,6 @@ MakeObj         proc    near
                 ret
 MakeObj         endp
 
-;ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
-;ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+;â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+;â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
